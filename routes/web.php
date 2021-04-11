@@ -13,9 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\MessageController::class, 'index'])->name('messages.index');
+
+Route::post('/upload', [\App\Http\Controllers\MessageController::class, 'uploadImage'])->name('messages.upload')
+    ->middleware('auth');
+
+Route::post('/', [\App\Http\Controllers\MessageController::class, 'store'])->name('messages.store')
+    ->middleware('auth');
+
+Route::put('/', [\App\Http\Controllers\MessageController::class, 'update'])->name('messages.update')
+    ->middleware('auth');
 
 Auth::routes();
 
